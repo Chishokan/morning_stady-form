@@ -49,6 +49,18 @@ window.APP_CONFIG = {
 
 `index.html` を開けばそのまま使えます。全員に配布するなら静的ホスティングで公開します。
 
+**Vercel で公開する例（推奨）:**
+
+このリポジトリはビルド不要の静的サイトなので、そのまま公開できます。
+
+1. [Vercel](https://vercel.com/) にログインし、**Add New → Project** からこの GitHub リポジトリをインポートします。
+2. Framework Preset は **Other**（自動検出のままでOK）、Build 設定は空のままで **Deploy** を押します。
+   - `vercel.json` を同梱しているので、追加設定は不要です。
+3. 発行された URL（`https://<プロジェクト名>.vercel.app`）を参加者に共有します。
+
+> `main`（またはデフォルトブランチ）へ push するたびに Vercel が自動で再デプロイします。
+> CLI を使う場合は、リポジトリ直下で `npx vercel --prod` でも公開できます。
+
 **GitHub Pages で公開する例:**
 
 1. GitHub の **Settings → Pages** を開く。
