@@ -15,6 +15,14 @@
     </header>
 
     <main class="card">
+      <!-- ステップ表示 -->
+      <ol class="steps" id="steps">
+        <li class="step is-active" data-step="input">入力</li>
+        <li class="step" data-step="confirm">確認</li>
+        <li class="step" data-step="done">完了</li>
+      </ol>
+
+      <!-- ① 入力画面 -->
       <form id="signup-form" novalidate>
         <div class="field">
           <label for="name">お名前 <span class="req">必須</span></label>
@@ -29,46 +37,72 @@
         </div>
 
         <div class="field">
-          <label for="grade">学年・所属 <span class="req">必須</span></label>
+          <label for="grade">学年 <span class="req">必須</span></label>
           <select id="grade" name="grade" required>
             <option value="" disabled selected>選択してください</option>
-            <option value="小学生">小学生</option>
-            <option value="中学1年">中学1年</option>
-            <option value="中学2年">中学2年</option>
-            <option value="中学3年">中学3年</option>
-            <option value="高校1年">高校1年</option>
-            <option value="高校2年">高校2年</option>
-            <option value="高校3年">高校3年</option>
-            <option value="大学生・専門学生">大学生・専門学生</option>
-            <option value="社会人">社会人</option>
-            <option value="その他">その他</option>
+            <optgroup label="小学生">
+              <option value="小学1年生">小学1年生</option>
+              <option value="小学2年生">小学2年生</option>
+              <option value="小学3年生">小学3年生</option>
+              <option value="小学4年生">小学4年生</option>
+              <option value="小学5年生">小学5年生</option>
+              <option value="小学6年生">小学6年生</option>
+            </optgroup>
+            <optgroup label="中学生">
+              <option value="中学1年生">中学1年生</option>
+              <option value="中学2年生">中学2年生</option>
+              <option value="中学3年生">中学3年生</option>
+            </optgroup>
+            <optgroup label="高校生">
+              <option value="高校1年生">高校1年生</option>
+              <option value="高校2年生">高校2年生</option>
+              <option value="高校3年生">高校3年生</option>
+            </optgroup>
           </select>
           <p class="error" data-error-for="grade"></p>
         </div>
 
         <div class="field">
-          <span class="field__label">参加希望曜日 <span class="req">必須</span></span>
-          <div class="checkgroup">
-            <label class="check"><input type="checkbox" name="days" value="月" /> 月</label>
-            <label class="check"><input type="checkbox" name="days" value="火" /> 火</label>
-            <label class="check"><input type="checkbox" name="days" value="水" /> 水</label>
-            <label class="check"><input type="checkbox" name="days" value="木" /> 木</label>
-            <label class="check"><input type="checkbox" name="days" value="金" /> 金</label>
-          </div>
-          <p class="error" data-error-for="days"></p>
+          <label for="school">学校名 <span class="req">必須</span></label>
+          <input type="text" id="school" name="school" required placeholder="例：佐世保市立〇〇中学校" />
+          <p class="error" data-error-for="school"></p>
         </div>
 
         <div class="field">
-          <label for="goal">夏休みの目標・意気込み（任意）</label>
-          <textarea id="goal" name="goal" rows="3" placeholder="例：毎朝7時に起きて、英語の予習をがんばる！"></textarea>
+          <label for="affiliation">所属 <span class="req">必須</span></label>
+          <select id="affiliation" name="affiliation" required>
+            <option value="" disabled selected>選択してください</option>
+            <option value="智翔館 佐世保駅前校">智翔館 佐世保駅前校</option>
+            <option value="智翔館 日宇校">智翔館 日宇校</option>
+            <option value="智翔館 大野校">智翔館 大野校</option>
+            <option value="智翔館 日野校">智翔館 日野校</option>
+            <option value="RED">RED</option>
+            <option value="ネクスタ">ネクスタ</option>
+            <option value="その他">その他</option>
+          </select>
+          <p class="error" data-error-for="affiliation"></p>
         </div>
 
-        <button type="submit" class="submit" id="submit-btn">
-          <span class="submit__label">この内容で申し込む</span>
+        <button type="submit" class="submit" id="to-confirm-btn">
+          <span class="submit__label">入力内容を確認する</span>
         </button>
         <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
 
+      <!-- ② 確認画面 -->
+      <section class="confirm" id="confirm" hidden>
+        <p class="confirm__lead">以下の内容で申し込みます。よろしければ「送信する」を押してください。</p>
+        <dl class="review" id="review"></dl>
+        <div class="confirm__actions">
+          <button type="button" class="submit submit--ghost" id="back-btn">修正する</button>
+          <button type="button" class="submit" id="send-btn">
+            <span class="submit__label">送信する</span>
+          </button>
+        </div>
+        <p class="form-status" id="confirm-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <!-- ③ 完了画面 -->
       <div class="thanks" id="thanks" hidden>
         <div class="thanks__icon">🎉</div>
         <h2>申し込みありがとうございます！</h2>

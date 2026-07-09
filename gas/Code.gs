@@ -16,9 +16,9 @@ var HEADERS = [
   "受付日時",
   "お名前",
   "メールアドレス",
-  "学年・所属",
-  "参加希望曜日",
-  "目標・意気込み",
+  "学年",
+  "学校名",
+  "所属",
 ];
 
 /**
@@ -42,8 +42,8 @@ function doPost(e) {
       name,
       email,
       String(data.grade || ""),
-      String(data.days || ""),
-      String(data.goal || ""),
+      String(data.school || ""),
+      String(data.affiliation || ""),
     ]);
 
     return jsonResponse({ ok: true });

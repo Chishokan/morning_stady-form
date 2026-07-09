@@ -2,15 +2,33 @@
   "use strict";
 
   const form = document.getElementById("signup-form");
-  const submitBtn = document.getElementById("submit-btn");
-  const statusEl = document.getElementById("form-status");
+  const confirmEl = document.getElementById("confirm");
+  const reviewEl = document.getElementById("review");
   const thanksEl = document.getElementById("thanks");
+
+  const toConfirmBtn = document.getElementById("to-confirm-btn");
+  const backBtn = document.getElementById("back-btn");
+  const sendBtn = document.getElementById("send-btn");
   const againBtn = document.getElementById("again-btn");
+
+  const statusEl = document.getElementById("form-status");
+  const confirmStatusEl = document.getElementById("confirm-status");
+  const steps = document.querySelectorAll(".step");
 
   const endpoint =
     (window.APP_CONFIG && window.APP_CONFIG.GAS_ENDPOINT) || "";
 
-  // フィールドごとのエラー表示をクリア
+  // 確認画面に表示する項目（ラベルとキー）
+  const REVIEW_FIELDS = [
+    { key: "name", label: "お名前" },
+    { key: "email", label: "メールアドレス" },
+    { key: "grade", label: "学年" },
+    { key: "school", label: "学校名" },
+    { key: "affiliation", label: "所属" },
+  ];
+
+  let currentData = null;
+
   function clearErrors() {
     document.querySelectorAll(".error").forEach((el) => (el.textContent = ""));
     statusEl.textContent = "";
@@ -22,7 +40,32 @@
     if (el) el.textContent = message;
   }
 
-  // 入力値のバリデーション。エラーがあれば true を返す
+  // 表示中のステップを切り替える（input / confirm / done）
+  function goStep(step) {
+    form.hidden = step !== "input";
+    confirmEl.hidden = step !== "confirm";
+    thanksEl.hidden = step !== "done";
+
+    let active = true;
+    steps.forEach((el) => {
+      el.classList.toggle("is-active", active);
+      if (el.dataset.step === step) active = false;
+    });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function collectData() {
+    return {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      grade: form.grade.value,
+      school: form.school.value.trim(),
+      affiliation: form.affiliation.value,
+    };
+  }
+
+  // 入力チェック。エラーがあれば true を返す
   function validate(data) {
     let hasError = false;
 
@@ -30,7 +73,6 @@
       setError("name", "お名前を入力してください。");
       hasError = true;
     }
-
     if (!data.email) {
       setError("email", "メールアドレスを入力してください。");
       hasError = true;
@@ -38,42 +80,43 @@
       setError("email", "メールアドレスの形式が正しくありません。");
       hasError = true;
     }
-
     if (!data.grade) {
-      setError("grade", "学年・所属を選択してください。");
+      setError("grade", "学年を選択してください。");
       hasError = true;
     }
-
-    if (!data.days) {
-      setError("days", "参加希望曜日を1つ以上選んでください。");
+    if (!data.school) {
+      setError("school", "学校名を入力してください。");
       hasError = true;
     }
-
+    if (!data.affiliation) {
+      setError("affiliation", "所属を選択してください。");
+      hasError = true;
+    }
     return hasError;
   }
 
-  function collectData() {
-    const days = Array.from(
-      form.querySelectorAll('input[name="days"]:checked')
-    ).map((el) => el.value);
-
-    return {
-      name: form.name.value.trim(),
-      email: form.email.value.trim(),
-      grade: form.grade.value,
-      days: days.join("・"),
-      goal: form.goal.value.trim(),
-    };
+  function renderReview(data) {
+    reviewEl.innerHTML = "";
+    REVIEW_FIELDS.forEach((f) => {
+      const dt = document.createElement("dt");
+      dt.textContent = f.label;
+      const dd = document.createElement("dd");
+      dd.textContent = data[f.key] || "（未入力）";
+      reviewEl.appendChild(dt);
+      reviewEl.appendChild(dd);
+    });
   }
 
-  function setLoading(loading) {
-    submitBtn.disabled = loading;
-    submitBtn.querySelector(".submit__label").textContent = loading
+  function setSending(sending) {
+    sendBtn.disabled = sending;
+    backBtn.disabled = sending;
+    sendBtn.querySelector(".submit__label").textContent = sending
       ? "送信中..."
-      : "この内容で申し込む";
+      : "送信する";
   }
 
-  form.addEventListener("submit", async function (e) {
+  // 入力 → 確認
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
     clearErrors();
 
@@ -84,14 +127,32 @@
       return;
     }
 
+    currentData = data;
+    renderReview(data);
+    confirmStatusEl.textContent = "";
+    confirmStatusEl.className = "form-status";
+    goStep("confirm");
+  });
+
+  // 確認 → 入力（修正）
+  backBtn.addEventListener("click", function () {
+    goStep("input");
+  });
+
+  // 確認 → 送信 → 完了
+  sendBtn.addEventListener("click", async function () {
+    if (!currentData) return;
+
     if (!endpoint || endpoint.indexOf("http") !== 0) {
-      statusEl.textContent =
+      confirmStatusEl.textContent =
         "送信先が未設定です。config.js に Google Apps Script の URL を設定してください。";
-      statusEl.className = "form-status form-status--error";
+      confirmStatusEl.className = "form-status form-status--error";
       return;
     }
 
-    setLoading(true);
+    setSending(true);
+    confirmStatusEl.textContent = "";
+    confirmStatusEl.className = "form-status";
 
     try {
       // GAS のウェブアプリはCORSプリフライトを避けるため text/plain で送信する
@@ -99,28 +160,25 @@
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(currentData),
       });
 
-      // no-cors のためレスポンス内容は読めないが、送信成功として扱う
-      form.hidden = true;
-      thanksEl.hidden = false;
-      thanksEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      goStep("done");
     } catch (err) {
-      statusEl.textContent =
+      confirmStatusEl.textContent =
         "送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。";
-      statusEl.className = "form-status form-status--error";
+      confirmStatusEl.className = "form-status form-status--error";
     } finally {
-      setLoading(false);
+      setSending(false);
     }
   });
 
+  // 完了 → 最初から
   againBtn.addEventListener("click", function () {
     form.reset();
     clearErrors();
-    form.hidden = false;
-    thanksEl.hidden = true;
+    currentData = null;
+    goStep("input");
     form.name.focus();
-    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 })();
