@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>夏休みおはよう勉強会 申し込みフォーム</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero__sun" aria-hidden="true">☀️</div>
+      <h1 class="hero__title">夏休み おはよう勉強会</h1>
+      <p class="hero__lead">朝の涼しい時間に、みんなで集中して勉強しよう！<br />参加希望の方は下のフォームから申し込んでください。</p>
+    </header>
+
+    <main class="card">
+      <form id="signup-form" novalidate>
+        <div class="field">
+          <label for="name">お名前 <span class="req">必須</span></label>
+          <input type="text" id="name" name="name" autocomplete="name" required placeholder="山田 太郎" />
+          <p class="error" data-error-for="name"></p>
+        </div>
+
+        <div class="field">
+          <label for="email">メールアドレス <span class="req">必須</span></label>
+          <input type="email" id="email" name="email" autocomplete="email" required placeholder="taro@example.com" />
+          <p class="error" data-error-for="email"></p>
+        </div>
+
+        <div class="field">
+          <label for="grade">学年・所属 <span class="req">必須</span></label>
+          <select id="grade" name="grade" required>
+            <option value="" disabled selected>選択してください</option>
+            <option value="小学生">小学生</option>
+            <option value="中学1年">中学1年</option>
+            <option value="中学2年">中学2年</option>
+            <option value="中学3年">中学3年</option>
+            <option value="高校1年">高校1年</option>
+            <option value="高校2年">高校2年</option>
+            <option value="高校3年">高校3年</option>
+            <option value="大学生・専門学生">大学生・専門学生</option>
+            <option value="社会人">社会人</option>
+            <option value="その他">その他</option>
+          </select>
+          <p class="error" data-error-for="grade"></p>
+        </div>
+
+        <div class="field">
+          <span class="field__label">参加希望曜日 <span class="req">必須</span></span>
+          <div class="checkgroup">
+            <label class="check"><input type="checkbox" name="days" value="月" /> 月</label>
+            <label class="check"><input type="checkbox" name="days" value="火" /> 火</label>
+            <label class="check"><input type="checkbox" name="days" value="水" /> 水</label>
+            <label class="check"><input type="checkbox" name="days" value="木" /> 木</label>
+            <label class="check"><input type="checkbox" name="days" value="金" /> 金</label>
+          </div>
+          <p class="error" data-error-for="days"></p>
+        </div>
+
+        <div class="field">
+          <label for="goal">夏休みの目標・意気込み（任意）</label>
+          <textarea id="goal" name="goal" rows="3" placeholder="例：毎朝7時に起きて、英語の予習をがんばる！"></textarea>
+        </div>
+
+        <button type="submit" class="submit" id="submit-btn">
+          <span class="submit__label">この内容で申し込む</span>
+        </button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="thanks" id="thanks" hidden>
+        <div class="thanks__icon">🎉</div>
+        <h2>申し込みありがとうございます！</h2>
+        <p>受付が完了しました。当日の詳細は後日メールでご連絡します。<br />早起きして一緒にがんばりましょう！</p>
+        <button type="button" class="submit submit--ghost" id="again-btn">続けて別の人を申し込む</button>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <p>夏休みおはよう勉強会 実行委員会</p>
+    </footer>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
