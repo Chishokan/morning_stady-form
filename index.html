@@ -11,19 +11,34 @@
     <header class="hero">
       <div class="hero__sun" aria-hidden="true">☀️</div>
       <h1 class="hero__title">夏休み おはよう勉強会</h1>
-      <p class="hero__lead">朝の涼しい時間に、みんなで集中して勉強しよう！<br />参加希望の方は下のフォームから申し込んでください。</p>
+      <p class="hero__lead">朝の涼しい時間に、みんなで集中して勉強しよう！<br />参加希望の方は下から申し込んでください。</p>
     </header>
 
     <main class="card">
-      <!-- ステップ表示 -->
-      <ol class="steps" id="steps">
+      <!-- ⓪ 所属区分の選択画面 -->
+      <section class="select" id="select">
+        <p class="select__lead">あてはまる区分を選んでください。</p>
+        <button type="button" class="choice" data-path="chishokan">
+          <span class="choice__title">智翔館・RED個別 所属の方はこちら</span>
+          <span class="choice__desc">智翔館 各校・RED個別に通っている方</span>
+        </button>
+        <button type="button" class="choice" data-path="other">
+          <span class="choice__title">その他塾・自治体 所属の方はこちら</span>
+          <span class="choice__desc">上記以外の塾や自治体などから参加する方</span>
+        </button>
+      </section>
+
+      <!-- ステップ表示（区分選択後に表示） -->
+      <ol class="steps" id="steps" hidden>
         <li class="step is-active" data-step="input">入力</li>
         <li class="step" data-step="confirm">確認</li>
         <li class="step" data-step="done">完了</li>
       </ol>
 
       <!-- ① 入力画面 -->
-      <form id="signup-form" novalidate>
+      <form id="signup-form" novalidate hidden>
+        <button type="button" class="backlink" id="to-select-btn">← 所属区分を選び直す</button>
+
         <div class="field">
           <label for="name">お名前 <span class="req">必須</span></label>
           <input type="text" id="name" name="name" autocomplete="name" required placeholder="山田 太郎" />
@@ -68,19 +83,33 @@
           <p class="error" data-error-for="school"></p>
         </div>
 
-        <div class="field">
+        <!-- 所属：智翔館・RED個別 の場合はプルダウン -->
+        <div class="field" data-path="chishokan">
           <label for="affiliation">所属 <span class="req">必須</span></label>
-          <select id="affiliation" name="affiliation" required>
+          <select id="affiliation" name="affiliation">
             <option value="" disabled selected>選択してください</option>
             <option value="智翔館 佐世保駅前校">智翔館 佐世保駅前校</option>
             <option value="智翔館 日宇校">智翔館 日宇校</option>
             <option value="智翔館 大野校">智翔館 大野校</option>
             <option value="智翔館 日野校">智翔館 日野校</option>
             <option value="RED">RED</option>
-            <option value="ネクスタ">ネクスタ</option>
-            <option value="その他">その他</option>
           </select>
           <p class="error" data-error-for="affiliation"></p>
+        </div>
+
+        <!-- 所属：その他塾・自治体 の場合は入力式 -->
+        <div class="field" data-path="other" hidden>
+          <label for="affiliationText">所属塾 <span class="req">必須</span></label>
+          <input type="text" id="affiliationText" name="affiliationText" placeholder="例：〇〇塾" />
+          <p class="hint">所属している塾がない場合は「なし」と記入してください。</p>
+          <p class="error" data-error-for="affiliationText"></p>
+        </div>
+
+        <!-- 電話番号：その他塾・自治体 の場合のみ -->
+        <div class="field" data-path="other" hidden>
+          <label for="phone">電話番号 <span class="req">必須</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="09012345678" />
+          <p class="error" data-error-for="phone"></p>
         </div>
 
         <button type="submit" class="submit" id="to-confirm-btn">

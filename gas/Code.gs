@@ -14,11 +14,13 @@ var SHEET_NAME = "申し込みログ";
 // スプレッドシートの見出し行
 var HEADERS = [
   "受付日時",
+  "区分",
   "お名前",
   "メールアドレス",
   "学年",
   "学校名",
   "所属",
+  "電話番号",
 ];
 
 /**
@@ -39,11 +41,13 @@ function doPost(e) {
     var sheet = getSheet();
     sheet.appendRow([
       new Date(),
+      String(data.category || ""),
       name,
       email,
       String(data.grade || ""),
       String(data.school || ""),
       String(data.affiliation || ""),
+      String(data.phone || ""),
     ]);
 
     return jsonResponse({ ok: true });
