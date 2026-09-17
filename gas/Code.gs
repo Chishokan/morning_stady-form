@@ -1,5 +1,5 @@
 /**
- * 夏休みおはよう勉強会 申し込みフォーム — バックエンド（Google Apps Script）
+ * 秋のおはよう勉強会 申し込みフォーム — バックエンド（Google Apps Script）
  *
  * このスクリプトは Google スプレッドシートに紐づけて使います。
  * ウェブフォームから送信された申し込みデータを受け取り、
@@ -62,7 +62,7 @@ function doPost(e) {
 function doGet() {
   return jsonResponse({
     ok: true,
-    message: "夏休みおはよう勉強会 申し込み受付エンドポイントは稼働中です。",
+    message: "秋のおはよう勉強会 申し込み受付エンドポイントは稼働中です。",
   });
 }
 
