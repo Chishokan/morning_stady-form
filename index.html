@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>秋のおはよう勉強会 申し込みフォーム</title>
+  <title>冬のおはよう勉強会 申し込みフォーム</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="page">
     <header class="hero">
-      <div class="hero__sun" aria-hidden="true">🍁</div>
-      <h1 class="hero__title">秋のおはよう勉強会</h1>
-      <p class="hero__lead">秋の澄んだ朝の時間に、みんなで集中して勉強しよう！<br />参加希望の方は下から申し込んでください。</p>
+      <div class="hero__sun" aria-hidden="true">⛄</div>
+      <h1 class="hero__title">冬のおはよう勉強会</h1>
+      <p class="hero__lead">冬の澄んだ朝の時間に、みんなで集中して勉強しよう！<br />参加希望の方は下から申し込んでください。</p>
     </header>
 
     <main class="card">
@@ -120,15 +120,19 @@
 
       <!-- ② 確認画面 -->
       <section class="confirm" id="confirm" hidden>
-        <p class="confirm__lead">以下の内容で申し込みます。よろしければ「送信する」を押してください。</p>
+        <p class="confirm__lead">以下の内容で申し込みます。よろしければ「申し込む」を押してください。</p>
         <dl class="review" id="review"></dl>
         <div class="confirm__actions">
           <button type="button" class="submit submit--ghost" id="back-btn">修正する</button>
           <button type="button" class="submit" id="send-btn">
-            <span class="submit__label">送信する</span>
+            <span class="submit__label">申し込む</span>
           </button>
         </div>
         <p class="form-status" id="confirm-status" role="status" aria-live="polite"></p>
+        <div class="contact">
+          <p class="contact__lead">ご不明な点がある方はこちら</p>
+          <a class="submit submit--ghost submit--link" id="contact-link" href="#" target="_blank" rel="noopener">問い合わせる</a>
+        </div>
       </section>
 
       <!-- ③ 完了画面 -->
@@ -141,7 +145,7 @@
     </main>
 
     <footer class="foot">
-      <p>秋のおはよう勉強会 実行委員会</p>
+      <p>冬のおはよう勉強会 実行委員会</p>
     </footer>
   </div>
 

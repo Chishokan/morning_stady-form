@@ -388,6 +388,30 @@ textarea {
   flex: 0 0 40%;
 }
 
+.submit--link {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* ===== Contact ===== */
+.contact {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--line);
+  text-align: center;
+}
+
+.contact__lead {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.contact .submit--ghost {
+  margin-top: 0;
+}
+
 /* ===== Thanks ===== */
 .thanks {
   text-align: center;

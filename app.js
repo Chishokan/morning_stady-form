@@ -12,6 +12,7 @@
   const sendBtn = document.getElementById("send-btn");
   const againBtn = document.getElementById("again-btn");
   const toSelectBtn = document.getElementById("to-select-btn");
+  const contactLink = document.getElementById("contact-link");
 
   const statusEl = document.getElementById("form-status");
   const confirmStatusEl = document.getElementById("confirm-status");
@@ -19,6 +20,8 @@
 
   const endpoint =
     (window.APP_CONFIG && window.APP_CONFIG.GAS_ENDPOINT) || "";
+  const contactUrl =
+    (window.APP_CONFIG && window.APP_CONFIG.CONTACT_URL) || "";
 
   // 所属区分（"chishokan" = 智翔館・RED個別 / "other" = その他塾・自治体）
   let path = null;
@@ -164,7 +167,7 @@
     backBtn.disabled = sending;
     sendBtn.querySelector(".submit__label").textContent = sending
       ? "送信中..."
-      : "送信する";
+      : "申し込む";
   }
 
   // ⓪ 区分選択
@@ -241,6 +244,22 @@
       setSending(false);
     }
   });
+
+  // 問い合わせる（config.js の CONTACT_URL を開く）
+  if (contactUrl) {
+    contactLink.href = contactUrl;
+    // メールリンクは同じタブで開く
+    if (contactUrl.indexOf("mailto:") === 0) {
+      contactLink.removeAttribute("target");
+    }
+  } else {
+    contactLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      confirmStatusEl.textContent =
+        "問い合わせ先が未設定です。config.js に CONTACT_URL を設定してください。";
+      confirmStatusEl.className = "form-status form-status--error";
+    });
+  }
 
   // 完了 → 最初（区分選択）から
   againBtn.addEventListener("click", function () {

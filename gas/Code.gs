@@ -1,5 +1,5 @@
 /**
- * 秋のおはよう勉強会 申し込みフォーム — バックエンド（Google Apps Script）
+ * 冬のおはよう勉強会 申し込みフォーム — バックエンド（Google Apps Script）
  *
  * このスクリプトは Google スプレッドシートに紐づけて使います。
  * ・ウェブフォームからの申し込みを1行として追記
@@ -49,10 +49,10 @@ var REPLY_TO = "";
 var ADMIN_EMAIL = "";
 
 // 件名
-var MAIL_SUBJECT = "【秋のおはよう勉強会】お申し込みありがとうございます（参加用Zoom URLのご案内）";
+var MAIL_SUBJECT = "【冬のおはよう勉強会】お申し込みありがとうございます（参加用Zoom URLのご案内）";
 
 // 開催情報
-// TODO: 秋の開催期間を確定したら書き換えてください（自動返信メールに記載されます）
+// TODO: 冬の開催期間を確定したら書き換えてください（自動返信メールに記載されます）
 var EVENT_PERIOD = "○/○(月)〜○/○(金)";
 var EVENT_TIME = "6:00〜7:00";
 var ZOOM_URL = "https://us06web.zoom.us/j/8031421632?pwd=YVRmWU9IT0pRa1N4Q0Q5SmZOYkJ0dz09";
@@ -215,7 +215,7 @@ function removeResendTrigger() {
 function doGet() {
   return jsonResponse({
     ok: true,
-    message: "秋のおはよう勉強会 申し込み受付エンドポイントは稼働中です。",
+    message: "冬のおはよう勉強会 申し込み受付エンドポイントは稼働中です。",
   });
 }
 
@@ -272,9 +272,9 @@ function buildPlainBody(name) {
   return [
     name + " 様",
     "",
-    "秋のおはよう勉強会にお申し込みいただいた皆さまへ",
+    "冬のおはよう勉強会にお申し込みいただいた皆さまへ",
     "",
-    "このたびは「秋のおはよう勉強会」にお申し込みいただき、誠にありがとうございます。",
+    "このたびは「冬のおはよう勉強会」にお申し込みいただき、誠にありがとうございます。",
     "",
     "■ 開催概要",
     "期間：" + EVENT_PERIOD,
@@ -323,8 +323,8 @@ function buildHtmlBody(name) {
   return [
     '<div style="font-family:Hiragino Sans,Meiryo,sans-serif;font-size:14px;line-height:1.8;color:#222;">',
     "<p>" + n + " 様</p>",
-    "<p>秋のおはよう勉強会にお申し込みいただいた皆さまへ</p>",
-    "<p>このたびは「秋のおはよう勉強会」にお申し込みいただき、誠にありがとうございます。</p>",
+    "<p>冬のおはよう勉強会にお申し込みいただいた皆さまへ</p>",
+    "<p>このたびは「冬のおはよう勉強会」にお申し込みいただき、誠にありがとうございます。</p>",
     "<p><strong>■ 開催概要</strong><br>",
     "期間：" + EVENT_PERIOD + "<br>",
     "時間：" + EVENT_TIME + "</p>",
