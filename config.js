@@ -10,5 +10,5 @@ window.APP_CONFIG = {
   // メールの場合: "mailto:example@example.com"
   // Web ページの場合: "https://example.com/contact"
   // 空文字のままだとボタンを押しても案内メッセージが表示されるだけです。
-  CONTACT_URL: "",
+  CONTACT_URL: "https://chishokan.co.jp/contact/",
 };
