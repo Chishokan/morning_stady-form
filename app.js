@@ -1,6 +1,7 @@
 (function () {
   "use strict";
 
+  const startEl = document.getElementById("start");
   const selectEl = document.getElementById("select");
   const stepsEl = document.getElementById("steps");
   const form = document.getElementById("signup-form");
@@ -12,8 +13,11 @@
   const sendBtn = document.getElementById("send-btn");
   const againBtn = document.getElementById("again-btn");
   const toSelectBtn = document.getElementById("to-select-btn");
+  const toStartBtn = document.getElementById("to-start-btn");
+  const startApplyBtn = document.getElementById("start-apply-btn");
   const contactLink = document.getElementById("contact-link");
 
+  const startStatusEl = document.getElementById("start-status");
   const statusEl = document.getElementById("form-status");
   const confirmStatusEl = document.getElementById("confirm-status");
   const steps = document.querySelectorAll(".step");
@@ -64,15 +68,16 @@
     if (el) el.textContent = message;
   }
 
-  // 表示中の画面を切り替える（select / input / confirm / done）
+  // 表示中の画面を切り替える（start / select / input / confirm / done）
   function goStep(step) {
+    startEl.hidden = step !== "start";
     selectEl.hidden = step !== "select";
-    stepsEl.hidden = step === "select";
+    stepsEl.hidden = step === "start" || step === "select";
     form.hidden = step !== "input";
     confirmEl.hidden = step !== "confirm";
     thanksEl.hidden = step !== "done";
 
-    if (step !== "select") {
+    if (step !== "start" && step !== "select") {
       let active = true;
       steps.forEach((el) => {
         el.classList.toggle("is-active", active);
@@ -167,8 +172,18 @@
     backBtn.disabled = sending;
     sendBtn.querySelector(".submit__label").textContent = sending
       ? "送信中..."
-      : "申し込む";
+      : "送信する";
   }
+
+  // 最初の画面 → 区分選択
+  startApplyBtn.addEventListener("click", function () {
+    goStep("select");
+  });
+
+  // 区分選択から最初の画面に戻る
+  toStartBtn.addEventListener("click", function () {
+    goStep("start");
+  });
 
   // ⓪ 区分選択
   document.querySelectorAll(".choice").forEach((btn) => {
@@ -255,9 +270,9 @@
   } else {
     contactLink.addEventListener("click", function (e) {
       e.preventDefault();
-      confirmStatusEl.textContent =
+      startStatusEl.textContent =
         "問い合わせ先が未設定です。config.js に CONTACT_URL を設定してください。";
-      confirmStatusEl.className = "form-status form-status--error";
+      startStatusEl.className = "form-status form-status--error";
     });
   }
 

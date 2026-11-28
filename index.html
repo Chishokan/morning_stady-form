@@ -15,8 +15,17 @@
     </header>
 
     <main class="card">
+      <!-- 最初の画面：申し込む / 問い合わせる -->
+      <section class="start" id="start">
+        <p class="start__lead">参加を希望する方は「申し込む」を、<br />ご不明な点がある方は「問い合わせる」を押してください。</p>
+        <button type="button" class="submit" id="start-apply-btn">申し込む</button>
+        <a class="submit submit--ghost submit--link" id="contact-link" href="#" target="_blank" rel="noopener">問い合わせる</a>
+        <p class="form-status" id="start-status" role="status" aria-live="polite"></p>
+      </section>
+
       <!-- ⓪ 所属区分の選択画面 -->
-      <section class="select" id="select">
+      <section class="select" id="select" hidden>
+        <button type="button" class="backlink" id="to-start-btn">← 最初の画面に戻る</button>
         <p class="select__lead">あてはまる区分を選んでください。</p>
         <button type="button" class="choice" data-path="chishokan">
           <span class="choice__title">智翔館・RED個別 所属の方はこちら</span>
@@ -120,19 +129,15 @@
 
       <!-- ② 確認画面 -->
       <section class="confirm" id="confirm" hidden>
-        <p class="confirm__lead">以下の内容で申し込みます。よろしければ「申し込む」を押してください。</p>
+        <p class="confirm__lead">以下の内容で申し込みます。よろしければ「送信する」を押してください。</p>
         <dl class="review" id="review"></dl>
         <div class="confirm__actions">
           <button type="button" class="submit submit--ghost" id="back-btn">修正する</button>
           <button type="button" class="submit" id="send-btn">
-            <span class="submit__label">申し込む</span>
+            <span class="submit__label">送信する</span>
           </button>
         </div>
         <p class="form-status" id="confirm-status" role="status" aria-live="polite"></p>
-        <div class="contact">
-          <p class="contact__lead">ご不明な点がある方はこちら</p>
-          <a class="submit submit--ghost submit--link" id="contact-link" href="#" target="_blank" rel="noopener">問い合わせる</a>
-        </div>
       </section>
 
       <!-- ③ 完了画面 -->

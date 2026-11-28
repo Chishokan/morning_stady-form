@@ -394,22 +394,20 @@ textarea {
   text-decoration: none;
 }
 
-/* ===== Contact ===== */
-.contact {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px dashed var(--line);
+/* ===== Start (最初の画面) ===== */
+.start {
   text-align: center;
+  padding: 8px 0;
 }
 
-.contact__lead {
-  margin: 0 0 10px;
-  font-size: 13px;
+.start__lead {
+  margin: 0 0 24px;
+  font-size: 15px;
   color: var(--ink-soft);
 }
 
-.contact .submit--ghost {
-  margin-top: 0;
+.start .submit--ghost {
+  margin-top: 14px;
 }
 
 /* ===== Thanks ===== */
